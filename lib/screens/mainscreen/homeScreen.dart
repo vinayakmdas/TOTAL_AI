@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:totelai/screens/authentication/loginscreen.dart';
 
 class Homescreen extends StatelessWidget {
   const Homescreen({super.key});

@@ -1,9 +1,32 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
-class Spalshscreen extends StatelessWidget {
+class Spalshscreen extends StatefulWidget {
   const Spalshscreen({super.key});
 
+  @override
+  State<Spalshscreen> createState() => _SpalshscreenState();
+}
+
+class _SpalshscreenState extends State<Spalshscreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Future.delayed(Duration(seconds: 3),(){
+final user= FirebaseAuth.instance.currentUser;
+if (user != null) {
+        // User is signed in, navigate to home screen
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        // User is not signed in, navigate to login screen
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
