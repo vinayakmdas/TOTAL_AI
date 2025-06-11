@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "107236137414",
+    "project_id": "total-ai-a1859",
+    "storage_bucket": "total-ai-a1859.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107236137414:android:922702e3f0d8975a72bac7",
+        "android_client_info": {
+          "package_name": "com.example.totelai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAta7u_5WAT7Bn-FCq6Nn8up2S_pHoTrtM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
