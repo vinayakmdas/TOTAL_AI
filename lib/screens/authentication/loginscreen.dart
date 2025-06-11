@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:totelai/widgets/textform_read.dart';
@@ -13,7 +14,17 @@ class LoginSCreen extends StatelessWidget {
     TextEditingController emailcontroller = TextEditingController();
     TextEditingController passwordcontroller = TextEditingController();
     
-  
+  Future<void> signInWithEmail(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailcontroller.text.trim(),
+        password: passwordcontroller.text.trim(),
+      );
+      Navigator.pushReplacementNamed(context, '/home');
+    } catch (e) {
+      print("Login Error: $e");
+    }
+  }
     
     return Scaffold(
       backgroundColor: Colors.black,
@@ -109,7 +120,9 @@ class LoginSCreen extends StatelessWidget {
                     ),
                     SizedBox(height: 15),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        signInWithEmail(context);
+                      },
                       child: Text(
                         "Sign In",
                         style: TextStyle(color: Colors.black),
@@ -145,8 +158,18 @@ class LoginSCreen extends StatelessWidget {
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                   TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                    child: Text(
+                    " Create an account",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+
                   TextButton(
                     onPressed: () {},
                     child: Text(
