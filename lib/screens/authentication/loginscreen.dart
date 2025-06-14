@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:totelai/widgets/textform_read.dart';
 
 class LoginSCreen extends StatelessWidget {
@@ -8,23 +9,43 @@ class LoginSCreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     TextEditingController emailcontroller = TextEditingController();
     TextEditingController passwordcontroller = TextEditingController();
-    
-  Future<void> signInWithEmail(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailcontroller.text.trim(),
-        password: passwordcontroller.text.trim(),
-      );
-      Navigator.pushReplacementNamed(context, '/home');
-    } catch (e) {
-      print("Login Error: $e");
+
+    Future<void> signInWithEmail(BuildContext context) async {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailcontroller.text.trim(),
+          password: passwordcontroller.text.trim(),
+        );
+        Navigator.pushReplacementNamed(context, '/home');
+      } catch (e) {
+        print("Login Error: $e");
+      }
     }
-  }
-    
+
+    Future<void> signInwithGoogle(BuildContext context) async {
+      try {
+        final GoogleSignInAccount? googleSignInAccount = await GoogleSignIn()
+            .signIn();
+        if (googleSignInAccount == null) {
+          return;
+        }
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        Navigator.pushReplacementNamed(context, '/home');
+        {}
+      } catch (e) {
+        print("google sign error is  $e");
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
@@ -147,7 +168,9 @@ class LoginSCreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      signInwithGoogle(context);
+                    },
                     child: Image.asset(
                       "assets/1974895dcb39192c99c0156e80494d3e-removebg-preview.png",
                       width: 63,
@@ -159,12 +182,12 @@ class LoginSCreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   TextButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/signup');
                     },
                     child: Text(
-                    " Create an account",
+                      " Create an account",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

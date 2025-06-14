@@ -10,74 +10,75 @@ class Spalshscreen extends StatefulWidget {
 }
 
 class _SpalshscreenState extends State<Spalshscreen> {
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    Future.delayed(Duration(seconds: 3),(){
-final user= FirebaseAuth.instance.currentUser;
-if (user != null) {
-        // User is signed in, navigate to home screen
+    Future.delayed(Duration(seconds: 3), () {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        // User is not signed in, navigate to login screen
         Navigator.pushReplacementNamed(context, '/login');
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Logo Image
-            Image.asset("assets/logos.png", width: 200, height: 140),
-
-            const SizedBox(height: 20),
-
-            // Total Ai Text
-            const Text(
-              'Total Ai',
-              style: TextStyle(fontSize: 43.0, color: Colors.white),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.3,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                Image.asset(
+                  "assets/logos.png",
+                  width: 200,
+                  height: 140,
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Total Ai',
+                  style: TextStyle(
+                    fontSize: 43.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
+          ),
 
-            const SizedBox(height: 10),
-
-            // Animated Text Below
-            DefaultTextStyle(
-              style: const TextStyle(fontSize: 32.0, fontFamily: 'Horizon'),
+          Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.3,
+            left: 0,
+            right: 0,
+            child: DefaultTextStyle(
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 32.0,
+                fontFamily: 'Horizon',
+              ),
               child: AnimatedTextKit(
                 repeatForever: true,
                 animatedTexts: [
-                  RotateAnimatedText(
-                    "Let's go",
-                    textStyle: const TextStyle(color: Colors.green),
-                  ),
-                  RotateAnimatedText(
-                    "Let's Explore",
-                    textStyle: const TextStyle(color: Colors.pink),
-                  ),
-                  RotateAnimatedText(
-                    "Let's colloborate",
-                    textStyle: const TextStyle(color: Colors.red),
-                  ),
-                  RotateAnimatedText(
-                    "Let's Innovate",
-                    textStyle: const TextStyle(color: Colors.teal),
-                  ),
+                  RotateAnimatedText("Let's go", textStyle: TextStyle(color: Colors.green)),
+                  RotateAnimatedText("Let's Explore", textStyle: TextStyle(color: Colors.pink)),
+                  RotateAnimatedText("Let's colloborate", textStyle: TextStyle(color: Colors.red)),
+                  RotateAnimatedText("Let's Innovate", textStyle: TextStyle(color: Colors.teal)),
                 ],
                 onTap: () {
                   print("Tap Event");
                 },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
